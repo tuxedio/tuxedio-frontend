@@ -48,14 +48,17 @@ module.exports = function (grunt) {
       gruntfile: {
         files: ['Gruntfile.js']
       },
+      jade: {
+        files: ['<%= yeoman.app %>/views/**/*.jade'],
+        tasks: ['jade:server']
+      },
       livereload: {
         options: {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= yeoman.app %>/{,*/}*.html',
-          '<%= yeoman.app %>/{,*/}*.jade',
           '.tmp/styles/{,*/}*.css',
+          '.tmp/views/**/*.html',
           '.tmp/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
@@ -240,17 +243,26 @@ module.exports = function (grunt) {
           data: {
             debug: false
           },
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>/views',
+          src: '**/*.jade',
+          dest: '<%= yeoman.dist %>/views',
+          ext: '.html'
+        }]
+      },
+      server: {
+        options: {
           pretty: true
         },
-        files: [
-          {
-            expand: true,     // Enable dynamic expansion.
-            cwd: '<%= yeoman.app %>/views/',      // Src matches are relative to this path.
-            src: ['**/*.jade'], // Actual pattern(s) to match.
-            dest: '<%= yeoman.dist %>/views/',   // Destination path prefix.
-            ext: '.html'    // Dest filepaths will have this extension.
-          }
-        ]
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>/views',
+          src: '**/*.jade',
+          dest: '.tmp/views',
+          ext: '.html'
+        }]
       }
     },
 
@@ -408,7 +420,8 @@ module.exports = function (grunt) {
     concurrent: {
       server: [
         'coffee:dist',
-        'compass:server'
+        'compass:server',
+        'jade:server'
       ],
       test: [
         'coffee',
@@ -418,6 +431,7 @@ module.exports = function (grunt) {
         'coffee',
         'compass:dist',
         'imagemin',
+        'jade:dist',
         'svgmin'
       ]
     },
@@ -439,18 +453,12 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      'jade',
       'wiredep',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
       'watch'
     ]);
-  });
-
-  grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve:' + target]);
   });
 
   grunt.registerTask('test', [
@@ -463,7 +471,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'jade',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
