@@ -49,7 +49,7 @@ module.exports = function (grunt) {
         files: ['Gruntfile.js']
       },
       jade: {
-        files: ['<%= yeoman.app %>/views/**/*.jade'],
+        files: ['<%= yeoman.app %>/**/*.jade'],
         tasks: ['jade:server']
       },
       livereload: {
@@ -246,9 +246,9 @@ module.exports = function (grunt) {
         },
         files: [{
           expand: true,
-          cwd: '<%= yeoman.app %>/views',
+          cwd: '<%= yeoman.app %>',
           src: '**/*.jade',
-          dest: '<%= yeoman.dist %>/views',
+          dest: '<%= yeoman.dist %>',
           ext: '.html'
         }]
       },
@@ -258,9 +258,9 @@ module.exports = function (grunt) {
         },
         files: [{
           expand: true,
-          cwd: '<%= yeoman.app %>/views',
+          cwd: '<%= yeoman.app %>',
           src: '**/*.jade',
-          dest: '.tmp/views',
+          dest: '.tmp',
           ext: '.html'
         }]
       }
