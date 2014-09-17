@@ -1,0 +1,9 @@
+h1 Admin Page
+
+div
+  ul
+    li(ng-repeat="exp in list.experiences") Experience {{exp.id}}
+      ul
+        li Location: {{exp.location}}
+        li Price: {{exp.price}}
+        li Vendor: {{exp.vendor.name}}
