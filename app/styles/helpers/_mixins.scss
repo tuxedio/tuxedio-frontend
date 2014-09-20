@@ -1,0 +1,29 @@
+// ----------------------------------------------
+// Use to create Rem font size for compatible browsers.
+@mixin font-size($size) {
+  font-size: $size;
+  font-size: calculateRem($size);
+}
+
+// ----------------------------------------------
+// breakpoints used for sizing
+@mixin bp($feature, $value) {
+  // Set global device param
+  $media: only screen;
+  @media #{$media} and ($feature: $value) {
+    @content;
+  }
+}
+
+// ----------------------------------------------
+// Visually hide elements
+%visuallyhidden {
+  margin: -1px;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip: rect(0, 0, 0, 0);
+  position: absolute;
+}
