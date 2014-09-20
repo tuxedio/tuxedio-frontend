@@ -8,6 +8,5 @@
  # Controller of the tuxedioFrontendApp
 ###
 angular.module('tuxedioFrontendApp')
-  .controller 'AdminCtrl', ($scope, $resource) ->
-    Entry = $resource('/v1/experiences', null, {'query': { method: 'GET' }})
-    $scope.list = Entry.query()
+  .controller 'AdminCtrl', ($scope, Experiences) ->
+    $scope.list = Experiences.query()

@@ -15,5 +15,5 @@ describe 'Controller: AdminCtrl', ->
       $scope: scope
     }
 
-  it 'should attach a list of awesomeThings to the scope', ->
-    expect(scope.awesomeThings.length).toBe 3
+  it 'should attach a list of experiences to the scope', ->
+    expect(!!scope.list).toBe true
