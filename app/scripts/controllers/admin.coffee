@@ -8,5 +8,5 @@
  # Controller of the tuxedioFrontendApp
 ###
 angular.module('tuxedioFrontendApp')
-  .controller 'AdminCtrl', ($scope, Experiences) ->
-    $scope.list = Experiences.query()
+  .controller 'AdminCtrl', ($scope, Experience) ->
+    $scope.list = Experience.query()

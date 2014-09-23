@@ -8,10 +8,10 @@
  # Factory in the tuxedioFrontendApp.
 ###
 angular.module('tuxedioFrontendApp')
-  .factory 'Experiences', [
+  .factory 'Experience', [
     "$resource"
     ($resource) ->
-      return $resource("/v1/experiences/:id", null,
+      return $resource("/v1/experiences/", null,
         query:
           method: "GET"
       )
