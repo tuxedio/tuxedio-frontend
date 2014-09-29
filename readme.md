@@ -28,5 +28,9 @@ Tuxedio Angular Frontend
   2. Try to stay consistent in coding styles
   3. Use 2 spaces for tabbing
   4. Align characters when possible. (tip: use a monospaced font like Inconsolata)
-  5. Naming conventions: Use Yeoman Angular Conventions
+  5. Naming conventions: 
+    - Modules: lowerCamelCase
+    - Controllers: UpperCamelCase (eg: "MyCtrl")
+    - Directives: lowerCamel Case
+    - Services: UpperCamelCase (singular similar to rails modules)
   6. Comment about WHAT your code does, not HOW. If someone else can't understand the logic, you might want to refactor your code...

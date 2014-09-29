@@ -13,11 +13,11 @@ describe 'Controller: AdminCtrl', ->
   beforeEach inject ($controller, $rootScope, _Experience_) ->
     scope = $rootScope.$new()
     Experience = _Experience_
-    spyOn(Experience, 'query').andReturn({"experiences":[{"id":1},{"id":2}]})
+    spyOn(Experience, 'index').andReturn([{"id":1},{"id":2}])
     AdminCtrl = $controller 'AdminCtrl', {
       $scope: scope
     }
 
   it 'should attach a list of experiences to the scope', ->
-    expect(Experience.query).toHaveBeenCalled()
-    expect(scope.list).toEqual({experiences:[{id:1},{id:2}]})
+    expect(Experience.index).toHaveBeenCalled()
+    expect(scope.experiences).toEqual([{"id":1},{"id":2}])

@@ -9,6 +9,7 @@
  # Main module of the application.
 ###
 angular
+  # includes
   .module('tuxedioFrontendApp', [
     'ngAnimate',
     'ngCookies',
@@ -17,6 +18,8 @@ angular
     'ngSanitize',
     'ngTouch'
   ])
+
+  # Routes
   .config ($routeProvider) ->
     $routeProvider
       .when '/',
@@ -30,4 +33,9 @@ angular
         controller: 'AdminCtrl'
       .otherwise
         redirectTo: '/'
+
+  # CSRF Authentication
+  .config ($httpProvider) ->
+    $httpProvider.defaults.headers.common['X-CSRF-TOKEN'] =
+      $('meta[name=csrf-token]').attr('content')
 

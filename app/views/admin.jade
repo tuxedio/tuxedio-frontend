@@ -1,9 +1,22 @@
 h1 Admin Page
 
 div
-  ul
-    li(ng-repeat="exp in list.experiences") Experience {{exp.id}}
-      ul
-        li Location: {{exp.location}}
-        li Price: {{exp.price}}
-        li Vendor: {{exp.vendor.name}}
+  table.table-striped.table
+    tr
+      th
+        strong Name
+      th
+        strong Location
+      th
+        strong Price
+      th
+        strong Vendor name
+      th
+        strong &nbsp;
+    tr(ng-repeat="exp in experiences")
+      td {{exp.name}}
+      td {{exp.location}}
+      td {{exp.price}}
+      td {{exp.vendor.name}}
+      td
+        button(ng-click='delete({{exp.id}})') Delete Entry

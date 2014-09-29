@@ -9,4 +9,22 @@
 ###
 angular.module('tuxedioFrontendApp')
   .controller 'AdminCtrl', ($scope, Experience) ->
-    $scope.list = Experience.query()
+
+    # Initialize Variables
+    $scope.experiences = null
+
+    # Initialize controller
+    init = () ->
+      $scope.experiences = Experience.index()
+
+    # Delete experience by ID and update list
+    $scope.delete = (expId) ->
+      Experience.destroy({id: expId})
+      oldExperiences = $scope.experiences
+      $scope.experiences = []
+      angular.forEach(oldExperiences, (exp) ->
+        $scope.experiences.push(exp) unless exp.id == expId
+      )
+
+    # Call Controller Initialization
+    init()
