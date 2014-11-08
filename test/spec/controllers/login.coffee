@@ -2,9 +2,6 @@
 
 describe 'Controller: LoginCtrl', ->
 
-  # load the controller's module
-  beforeEach module 'tuxedioFrontendApp'
-
   LoginCtrl = {}
   scope = {}
 
@@ -14,6 +11,3 @@ describe 'Controller: LoginCtrl', ->
     LoginCtrl = $controller 'LoginCtrl', {
       $scope: scope
     }
-
-  it 'should attach a list of awesomeThings to the scope', ->
-    expect(scope.awesomeThings.length).toBe 3
