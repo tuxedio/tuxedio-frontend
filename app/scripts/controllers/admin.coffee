@@ -10,9 +10,6 @@
 angular.module('tuxedioFrontendApp')
   .controller 'AdminCtrl', ($scope, Experience) ->
 
-    # Initialize Variables
-    $scope.experiences = null
-
     # Initialize controller
     init = () ->
       $scope.experiences = Experience.index()
