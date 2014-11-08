@@ -2,23 +2,19 @@
 
 ###*
  # @ngdoc function
- # @name tuxedioFrontendApp.controller:MainCtrl
+ # @name tuxedioFrontendApp.controller:LoginCtrl
  # @description
- # # MainCtrl
+ # # LoginCtrl
  # Controller of the tuxedioFrontendApp
 ###
 angular.module('tuxedioFrontendApp')
-  .controller 'MainCtrl', ($scope) ->
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate'
-      'AngularJS'
-      'Karma'
-    ]
-    $scope.handleLoginBtnClick = ()->
+  .controller 'LoginCtrl', ($scope, $auth) ->
+    $scope.handleLoginBtnClick = ->
       $auth.submitLogin($scope.loginForm)
-        .then ((resp) ->
+        .then((resp) ->
           # Handle success response
           console.log("Submit successfull")
         ).catch (resp) ->
           # handle error response
           console.log("Submit Failed")
+

@@ -16,7 +16,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ng-token-auth'
   ])
 
   # Routes
@@ -38,4 +39,10 @@ angular
   .config ($httpProvider) ->
     $httpProvider.defaults.headers.common['X-CSRF-TOKEN'] =
       $('meta[name=csrf-token]').attr('content')
+
+  # Token Authentication through ng-token-auth
+  .config ($authProvider) ->
+        $authProvider.configure({
+            apiUrl: 'http://localhost:3000'
+        });
 

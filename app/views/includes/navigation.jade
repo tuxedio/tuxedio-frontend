@@ -23,14 +23,14 @@
             | Log in
             span.caret
           ul.dropdown-menu(role='menu')
-            li.navbar-form
-              form(role='form')
+            li.navbar-form(ng-controller="LoginCtrl")
+              form(ng-submit="submitLogin(loginForm)" role='form' ng-init="loginForm = {}")
                 .form-group
                   label.control-label(for='inputEmail') Email
-                  input.form-control(type='email', id='inputEmail', placeholder='Email')
+                  input.form-control(ng-model="loginForm.email" type='email', id='inputEmail', placeholder='Email')
                 .form-group
                   label.control-label(for='inputPassword') Password
-                  input.form-control(type='password', id='inputPassword', placeholder='Password')
+                  input.form-control(ng-model="loginForm.password" type='password', id='inputPassword', placeholder='Password')
                 .form-group
                   .checkbox
                     label
