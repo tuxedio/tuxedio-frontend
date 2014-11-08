@@ -24,18 +24,26 @@
             | Log in
             span.caret
           ul.dropdown-menu(role='menu')
-            li
-              a(href='#') Action
-            li
-              a(href='#') Another action
-            li
-              a(href='#') Something else here
+            li.navbar-form
+              form(role='form')
+                .form-group
+                  label.control-label(for='inputEmail') Email
+                  input.form-control(type='email', id='inputEmail', placeholder='Email')
+                .form-group
+                  label.control-label(for='inputPassword') Password
+                  input.form-control(type='password', id='inputPassword', placeholder='Password')
+                .form-group
+                  .checkbox
+                    label
+                      input(type='checkbox')
+                      |  Remember me
+                .form-group
+                  .col-sm-offset-4.col-sm-8
+                    button.btn.btn-success(type='submit') Sign in
             li.divider
-            li.dropdown-header Nav header
+            li.dropdown-header Don't have an account yet?
             li
-              a(href='#') Separated link
-            li
-              a(href='#') One more separated link
+              a(href='#') Sign up!
     // /.nav-collapse
 
 
