@@ -27,10 +27,10 @@
               form(ng-submit="submitLogin(loginForm)" role='form' ng-init="loginForm = {}")
                 .form-group
                   label.control-label(for='inputEmail') Email
-                  input.form-control(ng-model="loginForm.email" type='email', id='inputEmail', placeholder='Email')
+                  input.form-control(ng-model="loginForm.user.email" type='email', id='inputEmail', placeholder='Email')
                 .form-group
                   label.control-label(for='inputPassword') Password
-                  input.form-control(ng-model="loginForm.password" type='password', id='inputPassword', placeholder='Password')
+                  input.form-control(ng-model="loginForm.user.password" type='password', id='inputPassword', placeholder='Password')
                 .form-group
                   .checkbox
                     label

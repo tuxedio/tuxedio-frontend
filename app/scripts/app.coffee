@@ -36,13 +36,16 @@ angular
         redirectTo: '/'
 
   # CSRF Authentication
-  .config ($httpProvider) ->
-    $httpProvider.defaults.headers.common['X-CSRF-TOKEN'] =
+  .config ["$httpProvider", ($httpProvider) ->
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] =
       $('meta[name=csrf-token]').attr('content')
+  ]
 
   # Token Authentication through ng-token-auth
   .config ($authProvider) ->
         $authProvider.configure({
-            apiUrl: 'http://localhost:3000'
-        });
-
+          apiUrl: 'http://localhost:3000'
+          emailSignInPath: '/login.json'
+          handleLoginResponse: (resp, $auth) ->
+            return resp
+        })

@@ -1,3 +1,25 @@
+.panel.panel-default
+  .panel-body
+    h2 Account Info
+    p This panel displays the info associated with the current user.
+
+    h3 <u>current user</u>
+
+    .row
+
+      .col-sm-8
+        label user signed in?
+        p {{ user.signedIn ? "true" : "false" }}
+
+        label user email
+        p {{ user.email || "n/a" }}
+
+        label favorite color (optional)
+        p {{ user.favorite_color || "n/a" }}
+
+      .col-sm-4(ng-if='user.signedIn')
+        img(ng-src='{{ user.image }}', width="100%")
+
 .jumbotron
   h1 'Allo, 'Allo!
   p.lead

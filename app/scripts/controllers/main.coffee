@@ -8,7 +8,7 @@
  # Controller of the tuxedioFrontendApp
 ###
 angular.module('tuxedioFrontendApp')
-  .controller 'MainCtrl', ($scope) ->
+  .controller 'MainCtrl', ($scope, $auth, $http, $q) ->
     $scope.awesomeThings = [
       'HTML5 Boilerplate'
       'AngularJS'
