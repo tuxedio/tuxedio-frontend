@@ -10,12 +10,14 @@
 angular.module('tuxedioFrontendApp')
   .controller 'LoginCtrl', ($scope, $http, $window) ->
     $scope.message = ''
+    $scope.signedin = if $window.sessionStorage.token then true else false
     $scope.submit = ->
       $http
         .post('http://localhost:3000/login.json', $scope.login)
         .success (data, status, headers, config) ->
           console.log(data)
           $window.sessionStorage.token = data.authentication_token;
+          $scope.signedin = true
           $scope.message = "Successfull Login"
         .error (data, status, headers, config) ->
           # Remove token if user fails to log in
@@ -23,4 +25,8 @@ angular.module('tuxedioFrontendApp')
 
           #Error Handling:
           $scope.message = 'Error: Invalid email or password'
+
+    $scope.signout = ->
+      $scope.signedin = false
+      delete $window.sessionStorage.token;
 
