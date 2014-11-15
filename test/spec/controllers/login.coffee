@@ -2,6 +2,9 @@
 
 describe 'Controller: LoginCtrl', ->
 
+  # load the controller's module
+  beforeEach module 'tuxedioFrontendApp'
+
   LoginCtrl = {}
   scope = {}
 

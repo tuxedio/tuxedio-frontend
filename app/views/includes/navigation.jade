@@ -24,13 +24,14 @@
             span.caret
           ul.dropdown-menu(role='menu')
             li.navbar-form(ng-controller="LoginCtrl")
-              form(ng-submit="submitLogin(loginForm)" role='form' ng-init="loginForm = {}")
+              form(ng-submit="submit()" role='form')
+                .login-message(ng-if="message"){{message}}
                 .form-group
                   label.control-label(for='inputEmail') Email
-                  input.form-control(ng-model="loginForm.user.email" type='email', id='inputEmail', placeholder='Email')
+                  input.form-control(ng-model="login.user.email" type='email', id='inputEmail', name="user", placeholder='Email')
                 .form-group
                   label.control-label(for='inputPassword') Password
-                  input.form-control(ng-model="loginForm.user.password" type='password', id='inputPassword', placeholder='Password')
+                  input.form-control(ng-model="login.user.password" type='password', id='inputPassword', name="pass", placeholder='Password')
                 .form-group
                   .checkbox
                     label
@@ -38,7 +39,7 @@
                       |  Remember me
                 .form-group
                   .col-sm-offset-4.col-sm-8
-                    button.btn.btn-success(type='submit') Sign in
+                    button.btn.btn-success(type='submit', value="Login") Sign in
             li.divider
             li.dropdown-header Don't have an account yet?
             li

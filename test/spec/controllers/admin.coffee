@@ -2,6 +2,9 @@
 
 describe 'Controller: AdminCtrl', ->
 
+  # load the controller's module
+  beforeEach module 'tuxedioFrontendApp'
+
   AdminCtrl = {}
   scope = {}
   Experience = {}
