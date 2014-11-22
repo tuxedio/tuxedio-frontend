@@ -13,7 +13,7 @@ angular.module('tuxedioFrontendApp')
     $scope.signedin = if $window.localStorage.token then true else false
     $scope.submit = ->
       $http
-        .post('http://localhost:3000/v1/login.json', $scope.login)
+        .post('v1/login.json', $scope.login)
         .success (data, status, headers, config) ->
           console.log(data)
           $window.localStorage.token = data.token
