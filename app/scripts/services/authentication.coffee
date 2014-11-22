@@ -12,7 +12,7 @@ angular.module('tuxedioFrontendApp')
       #intercept Request to add authentication token to header
       request: (config) ->
         config.headers = config.headers || {}
-        authToken = $window.sessionStorage.token
+        authToken = $window.localStorage.token
         if authToken then config.headers.Authentication = 'Bearer ' + authToken
         return config
 
