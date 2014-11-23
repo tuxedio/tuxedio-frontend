@@ -45,11 +45,3 @@ describe 'Controller: LoginCtrl', ->
     scope.submit()
     $httpBackend.flush()
     expect(scope.signedin).not.toBeTruthy()
-
-
-
-
-
-
-
-
