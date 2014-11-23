@@ -14,6 +14,6 @@ div
     tr(ng-repeat="exp in experiences")
       td {{exp.experience.name}}
       td {{exp.experience.location}}
-      td {{exp.experience.description}} {{exp.experience.uid}}
+      td {{exp.experience.description}}
       td
-        button(ng-click='delete({{exp.experience.id}})') Delete Entry
+        button(ng-click='delete("{{exp.experience.id}}")') Delete Entry
