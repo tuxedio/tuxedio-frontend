@@ -8,11 +8,11 @@
  # Factory in the tuxedioFrontendApp.
 ###
 angular.module('tuxedioFrontendApp')
-  .factory 'authIntercepter', ($rootScope, $q, $window) ->
+  .factory 'authIntercepter', ($rootScope, $q, AuthToken) ->
       #intercept Request to add authentication token to header
       request: (config) ->
         config.headers = config.headers || {}
-        authToken = $window.localStorage.token
+        authToken = AuthToken.getToken()
         if authToken then config.headers.Authentication = 'Bearer ' + authToken
         return config
 

@@ -8,10 +8,9 @@
  # Factory in the tuxedioFrontendApp.
 ###
 angular.module('tuxedioFrontendApp')
-  .factory 'User', [
-    "$resource"
-    ($resource) ->
-      return $resource("/v1/users/:id", { id: "@id" },
+  .factory 'User',
+    ($resource, API_URL) ->
+      return $resource(API_URL + "users/:id", { id: "@id" },
         {
           'create':  { method: 'POST' },
           'index':   { method: 'GET', isArray: true },
@@ -20,4 +19,3 @@ angular.module('tuxedioFrontendApp')
           'destroy': { method: 'DELETE' }
         }
       )
-  ]

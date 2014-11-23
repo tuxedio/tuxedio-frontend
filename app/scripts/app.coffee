@@ -34,6 +34,9 @@ angular
       .otherwise
         redirectTo: '/'
 
+  # App Constants
+  .constant('API_URL', 'v1/')
+
   # CSRF Authentication
   .config ($httpProvider) ->
     $httpProvider.defaults.headers.common['X-CSRF-Token'] =
