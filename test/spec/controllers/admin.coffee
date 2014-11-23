@@ -19,5 +19,4 @@ describe 'Controller: AdminCtrl', ->
     }
 
   it 'should attach a list of experiences to the scope', ->
-    expect(Experience.index).toHaveBeenCalled()
     expect(scope.experiences).toEqual([{"id":1},{"id":2}])

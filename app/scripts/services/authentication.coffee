@@ -19,7 +19,4 @@ angular.module('tuxedioFrontendApp')
       # Error Handler
       responseError: (rejection) ->
         # TODO: 401 response handler
-        if rejection.status == 401
-          alert('A 401 was reached')
         return $q.reject(rejection)
-

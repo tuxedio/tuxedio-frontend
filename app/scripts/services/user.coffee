@@ -11,7 +11,7 @@ angular.module('tuxedioFrontendApp')
   .factory 'User', [
     "$resource"
     ($resource) ->
-      return $resource("/v1/user/:id", { id: "@id" },
+      return $resource("/v1/users/:id", { id: "@id" },
         {
           'create':  { method: 'POST' },
           'index':   { method: 'GET', isArray: true },

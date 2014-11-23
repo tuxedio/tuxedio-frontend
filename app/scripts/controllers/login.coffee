@@ -15,7 +15,6 @@ angular.module('tuxedioFrontendApp')
       $http
         .post('v1/login.json', $scope.login)
         .success (data, status, headers, config) ->
-          console.log(data)
           $window.localStorage.token = data.token
           $scope.signedin = true
           $scope.message = "Successful login"
