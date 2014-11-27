@@ -8,12 +8,24 @@
  # Controller of the tuxedioFrontendApp
 ###
 angular.module('tuxedioFrontendApp')
-  .controller 'LoginCtrl', ($scope, $auth) ->
-    # $scope.handleLoginBtnClick = ->
-    #   $auth.submitLogin($scope.loginForm)
-    #     .then((resp) ->
-    #       # Handle success response
-    #       console.log("Submit successfull")
-    #     ).catch (resp) ->
-    #       # handle error response
-    #       console.log("Submit Failed")
+  .controller 'LoginCtrl', ($scope, Session, API_URL) ->
+    $scope.message = ''
+    $scope.signedin = Session.authenticated()
+    $scope.submit = ->
+      Session.authenticate($scope.login).then(
+        success =  () ->
+          onSuccess()
+        error = () ->
+          onError()
+        )
+
+    $scope.signout = ->
+      Session.unauthenticate()
+      $scope.signedin = false
+
+    onSuccess = ->
+      $scope.signedin = true
+      $scope.message = "Successful login"
+
+    onError = ->
+      $scope.message = 'Error: Invalid email or password'

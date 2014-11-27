@@ -2,6 +2,9 @@
 
 describe 'Controller: AdminCtrl', ->
 
+  # load the controller's module
+  beforeEach module 'tuxedioFrontendApp'
+
   AdminCtrl = {}
   scope = {}
   Experience = {}
@@ -16,5 +19,4 @@ describe 'Controller: AdminCtrl', ->
     }
 
   it 'should attach a list of experiences to the scope', ->
-    expect(Experience.index).toHaveBeenCalled()
     expect(scope.experiences).toEqual([{"id":1},{"id":2}])

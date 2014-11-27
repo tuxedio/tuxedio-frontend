@@ -2,15 +2,15 @@
 
 ###*
  # @ngdoc service
- # @name tuxedioFrontendApp.experiences
+ # @name tuxedioFrontendApp.user
  # @description
- # # experiences
+ # # user
  # Factory in the tuxedioFrontendApp.
 ###
 angular.module('tuxedioFrontendApp')
-  .factory 'Experience',
+  .factory 'User',
     ($resource, API_URL) ->
-      return $resource(API_URL + "experiences/:id", { id: "@id" },
+      return $resource(API_URL + "users/:id", { id: "@id" },
         {
           'create':  { method: 'POST' },
           'index':   { method: 'GET', isArray: true },

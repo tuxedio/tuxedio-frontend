@@ -11,8 +11,7 @@
     "angular-sanitize": "1.2.23",
     "angular-animate": "1.2.23",
     "angular-touch": "1.2.23",
-    "angular-route": "1.2.23",
-    "ng-token-auth": "v0.0.24-beta2"
+    "angular-route": "1.2.23"
   },
   "devDependencies": {
     "angular-mocks": "1.2.23",

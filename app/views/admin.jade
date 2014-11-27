@@ -8,15 +8,12 @@ div
       th
         strong Location
       th
-        strong Price
-      th
-        strong Vendor name
+        strong Description
       th
         strong &nbsp;
     tr(ng-repeat="exp in experiences")
-      td {{exp.name}}
-      td {{exp.location}}
-      td {{exp.price}}
-      td {{exp.vendor.name}}
+      td {{exp.experience.name}}
+      td {{exp.experience.location}}
+      td {{exp.experience.description}}
       td
-        button(ng-click='delete({{exp.id}})') Delete Entry
+        button(ng-click='delete("{{exp.experience.id}}")') Delete Entry

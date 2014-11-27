@@ -35,7 +35,7 @@ module.exports = function (grunt) {
       },
       coffee: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}'],
-        tasks: ['newer:coffee:dist']
+        tasks: ['newer:coffee:dist', 'karma']
       },
       coffeeTest: {
         files: ['test/spec/{,*/}*.{coffee,litcoffee,coffee.md}'],
@@ -69,8 +69,8 @@ module.exports = function (grunt) {
     connect: {
       options: {
         port: 9000,
-        // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
+        // set $HOST in env to access server from outside
+        hostname: process.env.HOST || 'localhost',
         livereload: 35729
       },
       proxies: [
