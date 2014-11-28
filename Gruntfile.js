@@ -35,7 +35,7 @@ module.exports = function (grunt) {
       },
       coffee: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}'],
-        tasks: ['newer:coffee:dist', 'karma']
+        tasks: ['newer:coffee:main', 'karma']
       },
       coffeeTest: {
         files: ['test/spec/{,*/}*.{coffee,litcoffee,coffee.md}'],
@@ -196,7 +196,7 @@ module.exports = function (grunt) {
         sourceMap: true,
         sourceRoot: ''
       },
-      dist: {
+      main: {
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>/scripts',
@@ -263,12 +263,13 @@ module.exports = function (grunt) {
           data: {
             debug: false
           },
+          pretty: true
         },
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>',
           src: '**/*.jade',
-          dest: '<%= yeoman.dist %>',
+          dest: '.tmp',
           ext: '.html'
         }]
       },
@@ -290,7 +291,7 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
+      html: '.tmp/index.html',
       options: {
         dest: '<%= yeoman.dist %>',
         flow: {
@@ -411,11 +412,17 @@ module.exports = function (grunt) {
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
-            '*.html',
-            'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
             'fonts/*'
           ]
+        }, {
+          expand: true,
+          cwd: '.tmp',
+          dest: '<%= yeoman.dist %>',
+          src: [
+            '*.html',
+            'views/{,*/}*.html'
+            ]
         }, {
           expand: true,
           cwd: '.tmp/images',
@@ -424,8 +431,8 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: '.',
-          src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
-          dest: '<%= yeoman.dist %>'
+          dest: '<%= yeoman.dist %>',
+          src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*'
         }]
       },
       styles: {
@@ -439,16 +446,16 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'coffee:dist',
+        'coffee:main',
         'compass:server',
         'jade:server'
       ],
       test: [
-        'coffee',
+        'coffee:test',
         'compass'
       ],
       dist: [
-        'coffee',
+        'coffee:main',
         'compass:dist',
         'imagemin',
         'jade:dist',
@@ -494,18 +501,18 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
-    'useminPrepare',
     'concurrent:dist',
+    'useminPrepare',
     'autoprefixer',
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'cdnify',
+    'cdnify', // Keep? doesnt really do anything because of concat of js files.
     'cssmin',
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin'
+    // 'htmlmin'
   ]);
 
   grunt.registerTask('default', [

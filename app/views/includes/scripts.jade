@@ -7,7 +7,8 @@ script.
 
   ga('create', 'UA-XXXXX-X');
   ga('send', 'pageview');
-
+//- Empty html comment to move "build:js" to its own line (jade/usemin bug)
+<!-- -->
 <!-- build:js(.) scripts/oldieshim.js -->
 <!--[if lt IE 9]>
 <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -37,6 +38,8 @@ script(src="bower_components/angular-sanitize/angular-sanitize.js")
 script(src="bower_components/angular-animate/angular-animate.js")
 script(src="bower_components/angular-touch/angular-touch.js")
 script(src="bower_components/angular-route/angular-route.js")
+//- Empty html comment to move "endbower" to its own line (jade/usemin bug)
+<!-- -->
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -51,4 +54,6 @@ script(src="scripts/services/user.js")
 script(src="scripts/services/auth_token.js")
 script(src="scripts/services/auth_intercepter.js")
 script(src="scripts/services/session.js")
+//- Empty html comment to move "endbuild" to its own line (jade/usemin bug)
+<!-- -->
 <!-- endbuild -->
