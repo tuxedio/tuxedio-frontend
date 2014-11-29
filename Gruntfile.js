@@ -21,6 +21,9 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
 
+  //define pkg for use in deployment versioning
+  var pkg = require('./package.json');
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -154,7 +157,7 @@ module.exports = function (grunt) {
           src: [
             '.tmp',
             '<%= yeoman.dist %>/{,*/}*',
-            '!<%= yeoman.dist %>/.git*'
+            '!<%= yeoman.dist %>/.git{,*/}*'
           ]
         }]
       },
@@ -445,7 +448,10 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '.',
           dest: '<%= yeoman.dist %>',
-          src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*'
+          src: [
+            'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
+            'Dockerfile'
+          ]
         }]
       },
       styles: {
@@ -494,6 +500,22 @@ module.exports = function (grunt) {
       dist: {
         constants: {
           API_URL: "http://api.tuxedio.com/v1/"
+        }
+      }
+    },
+
+    buildcontrol: {
+      options: {
+        dir: 'dist',
+        commit: true,
+        push: true,
+        message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+      },
+      dokku: {
+        options: {
+          remote: 'dokku@tuxedio.com:www',
+          branch: 'master',
+          tag: pkg.version
         }
       }
     },
@@ -547,6 +569,12 @@ module.exports = function (grunt) {
     'filerev',
     'usemin',
     // 'htmlmin'
+  ]);
+
+  grunt.registerTask('deploy', [
+    'test',
+    'build',
+    'buildcontrol'
   ]);
 
   grunt.registerTask('default', [

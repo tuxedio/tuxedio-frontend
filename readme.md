@@ -28,9 +28,19 @@ Tuxedio Angular Frontend
   2. Try to stay consistent in coding styles
   3. Use 2 spaces for tabbing
   4. Align characters when possible. (tip: use a monospaced font like Inconsolata)
-  5. Naming conventions: 
+  5. Naming conventions:
     - Modules: lowerCamelCase
     - Controllers: UpperCamelCase (eg: "MyCtrl")
     - Directives: lowerCamel Case
     - Services: UpperCamelCase (singular similar to rails modules)
   6. Comment about WHAT your code does, not HOW. If someone else can't understand the logic, you might want to refactor your code...
+
+
+###Deploy to dokku:
+  1. Add ssh key to dokku
+
+    ```
+      $ cat ~/.ssh/id_rsa.pub | ssh root@<domian-name> "sudo sshcommand acl-add dokku <your-name>"
+    ```
+  2. Ensure Gruntfile buildcontrol is set to the correct dokku git repo
+  3. Run ```grunt deploy```
