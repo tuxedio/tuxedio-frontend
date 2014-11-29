@@ -11,8 +11,13 @@
 @import "base/typography";
 
 // ----------------------------------------------
-// Vendor
+// Vendor overrides
 @import "vendor_overrides/bootstrap_overrides";
+
+
+// ----------------------------------------------
+// Vendor styles through bower
+@import "vendor";
 
 // ----------------------------------------------
 // Layout

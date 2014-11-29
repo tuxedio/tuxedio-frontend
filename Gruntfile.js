@@ -35,7 +35,7 @@ module.exports = function (grunt) {
       },
       coffee: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}'],
-        tasks: ['newer:coffee:main', 'karma']
+        tasks: ['newer:coffee:server', 'karma']
       },
       coffeeTest: {
         files: ['test/spec/{,*/}*.{coffee,litcoffee,coffee.md}'],
@@ -180,9 +180,10 @@ module.exports = function (grunt) {
     wiredep: {
       options: {
       },
-      app: {
-        src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+      jade: {
+        src: ['<%= yeoman.app %>/views/includes/*.jade'],
+        ignorePath: /\.\.\/\.\.\/\.\.\//
+
       },
       sass: {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -196,7 +197,19 @@ module.exports = function (grunt) {
         sourceMap: true,
         sourceRoot: ''
       },
-      main: {
+      server: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>/scripts',
+          src: '{,*/}*.coffee',
+          dest: '.tmp/scripts',
+          ext: '.js'
+        }]
+      },
+      dist: {
+        options: {
+          sourceMap: false,
+        },
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>/scripts',
@@ -446,7 +459,7 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'coffee:main',
+        'coffee:server',
         'compass:server',
         'jade:server'
       ],
@@ -455,7 +468,7 @@ module.exports = function (grunt) {
         'compass'
       ],
       dist: [
-        'coffee:main',
+        'coffee:dist',
         'compass:dist',
         'imagemin',
         'jade:dist',
@@ -507,7 +520,6 @@ module.exports = function (grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'cdnify', // Keep? doesnt really do anything because of concat of js files.
     'cssmin',
     'uglify',
     'filerev',
