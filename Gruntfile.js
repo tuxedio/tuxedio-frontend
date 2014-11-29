@@ -461,19 +461,41 @@ module.exports = function (grunt) {
       server: [
         'coffee:server',
         'compass:server',
-        'jade:server'
+        'jade:server',
+        'ngconstant:server'
       ],
       test: [
         'coffee:test',
-        'compass'
+        'compass',
+        'ngconstant:server'
       ],
       dist: [
         'coffee:dist',
         'compass:dist',
         'imagemin',
         'jade:dist',
-        'svgmin'
+        'svgmin',
+        'ngconstant:dist'
       ]
+    },
+
+    // Automatically create ng-constants file for api connection
+    ngconstant: {
+      options: {
+        name: 'tuxedioFrontendApp.constants',
+        dest: '.tmp/scripts/constants/config.js',
+        wrap: true
+      },
+      server:{
+        constants: {
+          API_URL: "v1/"
+        }
+      },
+      dist: {
+        constants: {
+          API_URL: "http://api.tuxedio.com/v1/"
+        }
+      }
     },
 
     // Test settings

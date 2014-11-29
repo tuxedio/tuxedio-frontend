@@ -16,7 +16,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'tuxedioFrontendApp.constants'
   ])
 
   # Routes
@@ -33,9 +34,6 @@ angular
         controller: 'AdminCtrl'
       .otherwise
         redirectTo: '/'
-
-  # App Constants
-  .constant('API_URL', 'v1/')
 
   # CSRF Authentication
   .config ($httpProvider) ->
