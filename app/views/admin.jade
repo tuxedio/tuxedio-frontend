@@ -1,5 +1,4 @@
 h1 Admin Page
-
 div
   table.table-striped.table
     tr
@@ -12,8 +11,8 @@ div
       th
         strong &nbsp;
     tr(ng-repeat="exp in experiences")
-      td {{exp.experience.name}}
-      td {{exp.experience.location}}
-      td {{exp.experience.description}}
+      td {{exp.name}}
+      td {{exp.location}}
+      td {{exp.description}}
       td
         button(ng-click='delete("{{exp.experience.id}}")') Delete Entry

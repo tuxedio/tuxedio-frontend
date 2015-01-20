@@ -13,7 +13,7 @@ angular.module('tuxedioFrontendApp')
       return $resource(API_URL + "experiences/:id", { id: "@id" },
         {
           'create':  { method: 'POST' },
-          'index':   { method: 'GET', isArray: true },
+          'index':   { method: 'GET' },
           'show':    { method: 'GET', isArray: false },
           'update':  { method: 'PUT' },
           'destroy': { method: 'DELETE' }

@@ -21,6 +21,9 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
 
+  //define pkg for use in deployment versioning
+  var pkg = require('./package.json');
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -154,7 +157,7 @@ module.exports = function (grunt) {
           src: [
             '.tmp',
             '<%= yeoman.dist %>/{,*/}*',
-            '!<%= yeoman.dist %>/.git*'
+            '!<%= yeoman.dist %>/.git{,*/}*'
           ]
         }]
       },
@@ -445,7 +448,10 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '.',
           dest: '<%= yeoman.dist %>',
-          src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*'
+          src: [
+            'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
+            'Dockerfile'
+          ]
         }]
       },
       styles: {
@@ -461,19 +467,56 @@ module.exports = function (grunt) {
       server: [
         'coffee:server',
         'compass:server',
-        'jade:server'
+        'jade:server',
+        'ngconstant:server'
       ],
       test: [
         'coffee:test',
-        'compass'
+        'compass',
+        'ngconstant:server'
       ],
       dist: [
         'coffee:dist',
         'compass:dist',
         'imagemin',
         'jade:dist',
-        'svgmin'
+        'svgmin',
+        'ngconstant:dist'
       ]
+    },
+
+    // Automatically create ng-constants file for api connection
+    ngconstant: {
+      options: {
+        name: 'tuxedioFrontendApp.constants',
+        dest: '.tmp/scripts/constants/config.js',
+        wrap: true
+      },
+      server:{
+        constants: {
+          API_URL: "v1/"
+        }
+      },
+      dist: {
+        constants: {
+          API_URL: "http://api.tuxedio.com/v1/"
+        }
+      }
+    },
+
+    buildcontrol: {
+      options: {
+        dir: 'dist',
+        commit: true,
+        push: true,
+        message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch% ' + pkg.version
+      },
+      dokku: {
+        options: {
+          remote: 'dokku@tuxedio.com:www',
+          branch: 'master'
+        }
+      }
     },
 
     // Test settings
@@ -525,6 +568,12 @@ module.exports = function (grunt) {
     'filerev',
     'usemin',
     // 'htmlmin'
+  ]);
+
+  grunt.registerTask('deploy', [
+    'test',
+    'build',
+    'buildcontrol'
   ]);
 
   grunt.registerTask('default', [

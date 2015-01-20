@@ -2,21 +2,41 @@
 
 describe 'Controller: AdminCtrl', ->
 
+  $q = {}
+  $rootScope = {}
+  $scope = {}
+  mockExperience = {}
+  mockExperienceResponse = {"experiences":[{"id":1},{"id":2}]}
+  queryDeferred = {}
+
   # load the controller's module
   beforeEach module 'tuxedioFrontendApp'
 
-  AdminCtrl = {}
-  scope = {}
-  Experience = {}
+  beforeEach inject ($controller, _$q_, _$rootScope_) ->
+    $q = _$q_
+    $rootScope = _$rootScope_
+    $scope = $rootScope.$new()
 
-  # Initialize the controller and a mock scope
-  beforeEach inject ($controller, $rootScope, _Experience_) ->
-    scope = $rootScope.$new()
-    Experience = _Experience_
-    spyOn(Experience, 'index').andReturn([{"id":1},{"id":2}])
-    AdminCtrl = $controller 'AdminCtrl', {
-      $scope: scope
+    mockExperience = {
+      index:  ->
+        queryDeferred = $q.defer()
+        return {$promise: queryDeferred.promise}
     }
 
+    spyOn(mockExperience, 'index').andCallThrough()
+
+    $controller('AdminCtrl', {
+      '$scope': $scope,
+      'Experience': mockExperience
+    })
+
+
+  beforeEach ->
+    queryDeferred.resolve(mockExperienceResponse)
+    $rootScope.$apply()
+
+  it 'should query the Experience service', ->
+    expect(mockExperience.index).toHaveBeenCalled();
+
   it 'should attach a list of experiences to the scope', ->
-    expect(scope.experiences).toEqual([{"id":1},{"id":2}])
+    expect($scope.experiences).toEqual([{"id":1},{"id":2}])
