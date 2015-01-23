@@ -1,0 +1,18 @@
+h1 Admin Page
+div
+  table.table-striped.table
+    tr
+      th
+        strong Name
+      th
+        strong Location
+      th
+        strong Description
+      th
+        strong &nbsp;
+    tr(ng-repeat="exp in experiences")
+      td {{exp.name}}
+      td {{exp.location}}
+      td {{exp.description}}
+      td
+        button(ng-click='delete("{{exp.id}}")') Delete Entry

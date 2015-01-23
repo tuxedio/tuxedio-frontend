@@ -21,6 +21,9 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
 
+  //define pkg for use in deployment versioning
+  var pkg = require('./package.json');
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -35,7 +38,7 @@ module.exports = function (grunt) {
       },
       coffee: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}'],
-        tasks: ['newer:coffee:dist']
+        tasks: ['newer:coffee:server', 'karma']
       },
       coffeeTest: {
         files: ['test/spec/{,*/}*.{coffee,litcoffee,coffee.md}'],
@@ -48,14 +51,17 @@ module.exports = function (grunt) {
       gruntfile: {
         files: ['Gruntfile.js']
       },
+      jade: {
+        files: ['<%= yeoman.app %>/**/*.jade'],
+        tasks: ['jade:server']
+      },
       livereload: {
         options: {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= yeoman.app %>/{,*/}*.html',
-          '<%= yeoman.app %>/{,*/}*.jade',
           '.tmp/styles/{,*/}*.css',
+          '.tmp/views/**/*.html',
           '.tmp/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
@@ -66,15 +72,26 @@ module.exports = function (grunt) {
     connect: {
       options: {
         port: 9000,
-        // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
+        // set $HOST in env to access server from outside
+        hostname: process.env.HOST || 'localhost',
         livereload: 35729
       },
+      proxies: [
+        {
+          context: '/v1',
+          host: 'localhost',
+          port: 3000
+        }
+      ],
       livereload: {
         options: {
           open: true,
-          middleware: function (connect) {
-            return [
+          middleware: function (connect, options) {
+            if (!Array.isArray(options.base)) {
+              options.base = [options.base];
+            }
+            // Setup the proxy
+            var middlewares = [require('grunt-connect-proxy/lib/utils').proxyRequest,
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
@@ -82,6 +99,16 @@ module.exports = function (grunt) {
               ),
               connect.static(appConfig.app)
             ];
+            // Serve static files.
+            options.base.forEach(function(base) {
+                middlewares.push(connect.static(base));
+            });
+
+            // Make directory browse-able.
+            var directory = options.directory || options.base[options.base.length - 1];
+            middlewares.push(connect.directory(directory));
+
+            return middlewares;
           }
         }
       },
@@ -130,7 +157,7 @@ module.exports = function (grunt) {
           src: [
             '.tmp',
             '<%= yeoman.dist %>/{,*/}*',
-            '!<%= yeoman.dist %>/.git*'
+            '!<%= yeoman.dist %>/.git{,*/}*'
           ]
         }]
       },
@@ -155,11 +182,11 @@ module.exports = function (grunt) {
     // Automatically inject Bower components into the app
     wiredep: {
       options: {
-        cwd: '<%= yeoman.app %>'
       },
-      app: {
-        src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+      jade: {
+        src: ['<%= yeoman.app %>/views/includes/*.jade'],
+        ignorePath: /\.\.\/\.\.\/\.\.\//
+
       },
       sass: {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -173,7 +200,19 @@ module.exports = function (grunt) {
         sourceMap: true,
         sourceRoot: ''
       },
+      server: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>/scripts',
+          src: '{,*/}*.coffee',
+          dest: '.tmp/scripts',
+          ext: '.js'
+        }]
+      },
       dist: {
+        options: {
+          sourceMap: false,
+        },
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>/scripts',
@@ -242,15 +281,25 @@ module.exports = function (grunt) {
           },
           pretty: true
         },
-        files: [
-          {
-            expand: true,     // Enable dynamic expansion.
-            cwd: '<%= yeoman.app %>/views/',      // Src matches are relative to this path.
-            src: ['**/*.jade'], // Actual pattern(s) to match.
-            dest: '<%= yeoman.dist %>/views/',   // Destination path prefix.
-            ext: '.html'    // Dest filepaths will have this extension.
-          }
-        ]
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          src: '**/*.jade',
+          dest: '.tmp',
+          ext: '.html'
+        }]
+      },
+      server: {
+        options: {
+          pretty: true
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          src: '**/*.jade',
+          dest: '.tmp',
+          ext: '.html'
+        }]
       }
     },
 
@@ -258,7 +307,7 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
+      html: '.tmp/index.html',
       options: {
         dest: '<%= yeoman.dist %>',
         flow: {
@@ -379,11 +428,17 @@ module.exports = function (grunt) {
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
-            '*.html',
-            'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
             'fonts/*'
           ]
+        }, {
+          expand: true,
+          cwd: '.tmp',
+          dest: '<%= yeoman.dist %>',
+          src: [
+            '*.html',
+            'views/{,*/}*.html'
+            ]
         }, {
           expand: true,
           cwd: '.tmp/images',
@@ -392,8 +447,11 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: '.',
-          src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
-          dest: '<%= yeoman.dist %>'
+          dest: '<%= yeoman.dist %>',
+          src: [
+            'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
+            'Dockerfile'
+          ]
         }]
       },
       styles: {
@@ -407,19 +465,58 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'coffee:dist',
-        'compass:server'
+        'coffee:server',
+        'compass:server',
+        'jade:server',
+        'ngconstant:server'
       ],
       test: [
-        'coffee',
-        'compass'
+        'coffee:test',
+        'compass',
+        'ngconstant:server'
       ],
       dist: [
-        'coffee',
+        'coffee:dist',
         'compass:dist',
         'imagemin',
-        'svgmin'
+        'jade:dist',
+        'svgmin',
+        'ngconstant:dist'
       ]
+    },
+
+    // Automatically create ng-constants file for api connection
+    ngconstant: {
+      options: {
+        name: 'tuxedioFrontendApp.constants',
+        dest: '.tmp/scripts/constants/config.js',
+        wrap: true
+      },
+      server:{
+        constants: {
+          API_URL: "v1/"
+        }
+      },
+      dist: {
+        constants: {
+          API_URL: "http://api.tuxedio.com/v1/"
+        }
+      }
+    },
+
+    buildcontrol: {
+      options: {
+        dir: 'dist',
+        commit: true,
+        push: true,
+        message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch% ' + pkg.version
+      },
+      dokku: {
+        options: {
+          remote: 'dokku@tuxedio.com:www',
+          branch: 'master'
+        }
+      }
     },
 
     // Test settings
@@ -439,44 +536,44 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      'jade',
       'wiredep',
       'concurrent:server',
       'autoprefixer',
+      'configureProxies',
       'connect:livereload',
       'watch'
     ]);
-  });
-
-  grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve:' + target]);
   });
 
   grunt.registerTask('test', [
     'clean:server',
     'concurrent:test',
     'autoprefixer',
+    'configureProxies',
     'connect:test',
     'karma'
   ]);
 
   grunt.registerTask('build', [
     'clean:dist',
-    'jade',
     'wiredep',
-    'useminPrepare',
     'concurrent:dist',
+    'useminPrepare',
     'autoprefixer',
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'cdnify',
     'cssmin',
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin'
+    // 'htmlmin'
+  ]);
+
+  grunt.registerTask('deploy', [
+    'test',
+    'build',
+    'buildcontrol'
   ]);
 
   grunt.registerTask('default', [

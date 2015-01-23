@@ -1,0 +1,48 @@
+// Fixed navbar
+.navbar.navbar-default.navbar-fixed-top(role='navigation')
+  .container
+    .navbar-header
+      button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand(href='#') TuxedioFrontend
+    .navbar-collapse.collapse
+      ul.nav.navbar-nav
+        li.active
+          a(href='#') Home
+        li
+          a(href='#about') About
+
+      ul.nav.navbar-nav.navbar-right(ng-controller="LoginController")
+        li
+          a(ng-href="#/admin") Admin
+        li.dropdown(ng-hide="signedin")
+          a.dropdown-toggle(data-toggle='dropdown')
+            | Log in
+            span.caret
+          ul.dropdown-menu(role='menu')
+            li.navbar-form
+              form(ng-submit="submit()" role='form')
+                .login-message(ng-if="message"){{message}}
+                .form-group
+                  label.control-label(for='inputEmail') Email
+                  input.form-control(ng-model="login.user.email" type='email', id='inputEmail', name="user", placeholder='Email')
+                .form-group
+                  label.control-label(for='inputPassword') Password
+                  input.form-control(ng-model="login.user.password" type='password', id='inputPassword', name="pass", placeholder='Password')
+                .form-group
+                  .checkbox
+                    label
+                      input(type='checkbox')
+                      |  Remember me
+                .form-group
+                  .col-sm-offset-4.col-sm-8
+                    button.btn.btn-success(type='submit', value="Login") Sign in
+            li.divider
+            li.dropdown-header Don't have an account yet?
+            li
+              a(href='#') Sign up!
+        li(ng-hide="!signedin" ng-click="signout()")
+          a Sign Out
