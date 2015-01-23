@@ -2,13 +2,13 @@
 
 ###*
  # @ngdoc function
- # @name tuxedioFrontendApp.controller:AboutCtrl
+ # @name tuxedioFrontendApp.controller:AboutController
  # @description
- # # AboutCtrl
+ # # AboutController
  # Controller of the tuxedioFrontendApp
 ###
 angular.module('tuxedioFrontendApp')
-  .controller 'AboutCtrl', ($scope) ->
+  .controller 'AboutController', ($scope) ->
     $scope.awesomeThings = [
       'HTML5 Boilerplate'
       'AngularJS'

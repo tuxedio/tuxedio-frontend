@@ -2,13 +2,13 @@
 
 ###*
  # @ngdoc function
- # @name tuxedioFrontendApp.controller:AdminCtrl
+ # @name tuxedioFrontendApp.controller:AdminController
  # @description
- # # AdminCtrl
+ # # AdminController
  # Controller of the tuxedioFrontendApp
 ###
 angular.module('tuxedioFrontendApp')
-  .controller 'AdminCtrl', ($scope, Experience) ->
+  .controller 'AdminController', ($scope, Experience) ->
 
     # Initialize controller
     init = () ->
