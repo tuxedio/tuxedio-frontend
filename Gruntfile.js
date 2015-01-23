@@ -525,9 +525,13 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.coffee',
         singleRun: true
       }
+    },
+
+    coffeelint: {
+      app: ['app/**/*.coffee'],
+      tests: ['tests/**/*.coffee']
     }
   });
-
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -581,4 +585,6 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  grunt.registerTask('lint', ['coffeelint']);
 };
