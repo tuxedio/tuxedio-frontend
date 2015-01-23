@@ -20,7 +20,7 @@ angular.module('tuxedioFrontendApp')
       oldExperiences = $scope.experiences
       $scope.experiences = []
       angular.forEach(oldExperiences, (exp) ->
-        $scope.experiences.push(exp) unless exp.experience.id == expId
+        $scope.experiences.push(exp) unless exp.id == expId
       )
 
     # Call Controller Initialization
