@@ -1,18 +1,18 @@
 'use strict'
 
-describe 'Controller: LoginCtrl', ->
+describe 'Controller: LoginController', ->
 
   # load the controller's module
   beforeEach module 'tuxedioFrontendApp'
 
-  LoginCtrl = {}
+  LoginController = {}
   scope = {}
   $httpBackend = {}
 
   # Initialize the controller and a mock scope
   beforeEach inject ($controller, $rootScope, $injector) ->
     scope = $rootScope.$new()
-    LoginCtrl = $controller 'LoginCtrl', {
+    LoginController = $controller 'LoginController', {
       $scope: scope
     }
     $httpBackend = $injector.get('$httpBackend')

@@ -1,6 +1,6 @@
 'use strict'
 
-describe 'Controller: AdminCtrl', ->
+describe 'Controller: AdminController', ->
 
   $q = {}
   $rootScope = {}
@@ -25,7 +25,7 @@ describe 'Controller: AdminCtrl', ->
 
     spyOn(mockExperience, 'index').andCallThrough()
 
-    $controller('AdminCtrl', {
+    $controller('AdminController', {
       '$scope': $scope,
       'Experience': mockExperience
     })
