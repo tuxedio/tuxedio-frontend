@@ -2,13 +2,13 @@
 
 ###*
  # @ngdoc function
- # @name tuxedioFrontendApp.controller:LoginCtrl
+ # @name tuxedioFrontendApp.controller:LoginController
  # @description
- # # LoginCtrl
+ # # LoginController
  # Controller of the tuxedioFrontendApp
 ###
 angular.module('tuxedioFrontendApp')
-  .controller 'LoginCtrl', ($scope, Session, API_URL) ->
+  .controller 'LoginController', ($scope, Session, API_URL) ->
     $scope.message = ''
     $scope.signedin = Session.authenticated()
     $scope.submit = ->
