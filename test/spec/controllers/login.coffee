@@ -8,10 +8,18 @@ describe 'Controller: LoginController', ->
   LoginController = {}
   scope = {}
   $httpBackend = {}
+  rememberedUser = {
+    user: {
+      email: 'example@example.com',
+      password: 'foobar',
+      remember:true
+    }
+  }
 
   # Initialize the controller and a mock scope
   beforeEach inject ($controller, $rootScope, $injector) ->
     scope = $rootScope.$new()
+    scope.login = rememberedUser
     LoginController = $controller 'LoginController', {
       $scope: scope
     }
