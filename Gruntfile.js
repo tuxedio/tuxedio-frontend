@@ -473,6 +473,7 @@ module.exports = function (grunt) {
       test: [
         'coffee:test',
         'compass',
+        'coffeelint',
         'ngconstant:server'
       ],
       dist: [
