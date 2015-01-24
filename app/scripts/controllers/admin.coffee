@@ -13,7 +13,7 @@ angular.module('tuxedioFrontendApp')
     # Initialize controller
     init = () ->
       Experience.index().$promise.then (data) ->
-       $scope.experiences = data.experiences
+        $scope.experiences = data.experiences
 
     # Delete experience by ID and update list
     $scope.delete = (expId) ->

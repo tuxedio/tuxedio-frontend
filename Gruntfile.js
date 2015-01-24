@@ -40,6 +40,13 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}'],
         tasks: ['newer:coffee:server', 'karma']
       },
+      coffeelint:{
+        files: [
+          '<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}',
+          'test/{,*/}*.{coffee,litcoffee,coffee.md}'
+        ],
+        tasks: ['coffeelint']
+      },
       coffeeTest: {
         files: ['test/spec/{,*/}*.{coffee,litcoffee,coffee.md}'],
         tasks: ['newer:coffee:test', 'karma']
@@ -473,6 +480,7 @@ module.exports = function (grunt) {
       test: [
         'coffee:test',
         'compass',
+        'coffeelint',
         'ngconstant:server'
       ],
       dist: [
@@ -525,9 +533,13 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.coffee',
         singleRun: true
       }
+    },
+
+    coffeelint: {
+      app: ['app/**/*.coffee'],
+      tests: ['tests/**/*.coffee']
     }
   });
-
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -581,4 +593,6 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  grunt.registerTask('lint', ['coffeelint']);
 };
