@@ -9,25 +9,23 @@
 ###
 angular.module('tuxedioFrontendApp')
   .factory 'Session', ($http, AuthToken, API_URL) ->
-      authenticate = (login) ->
-        $http
-        .post(API_URL + 'login.json', login)
-        .success (data, status, headers, config) ->
-          AuthToken.setToken(data.token)
-        .error (data, status, headers, config) ->
-          # Remove token if user fails to log in
-          AuthToken.setToken()
-
-      unauthenticate = ->
+    authenticate = (login) ->
+      $http
+      .post(API_URL + 'login.json', login)
+      .success (data, status, headers, config) ->
+        AuthToken.setToken(data.token)
+      .error (data, status, headers, config) ->
+        # Remove token if user fails to log in
         AuthToken.setToken()
 
-      authenticated = ->
-        if AuthToken.getToken() then true else false
+    unauthenticate = ->
+      AuthToken.setToken()
 
-      return {
-        authenticate: authenticate,
-        unauthenticate: unauthenticate,
-        authenticated: authenticated
-      }
+    authenticated = ->
+      if AuthToken.getToken() then true else false
 
-
+    return {
+      authenticate: authenticate,
+      unauthenticate: unauthenticate,
+      authenticated: authenticated
+    }
