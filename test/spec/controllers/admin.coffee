@@ -6,7 +6,6 @@ describe 'Controller: AdminController', ->
   $rootScope = {}
   $scope = {}
   mockExperience = {}
-  mockExperienceResponse = {"experiences":[{"id":1},{"id":2}]}
   queryDeferred = {}
 
   # load the controller's module
@@ -21,22 +20,33 @@ describe 'Controller: AdminController', ->
       index:  ->
         queryDeferred = $q.defer()
         return {$promise: queryDeferred.promise}
+      delete:  ->
+        queryDeferred = $q.defer()
+        return {$promise: queryDeferred.promise}
     }
 
     spyOn(mockExperience, 'index').andCallThrough()
+    spyOn(mockExperience, 'delete').andCallThrough()
 
-    $controller('AdminController', {
+    $controller 'AdminController', {
       '$scope': $scope,
       'Experience': mockExperience
-    })
+    }
 
 
-  beforeEach ->
-    queryDeferred.resolve(mockExperienceResponse)
-    $rootScope.$apply()
+  describe '#index', ->
+    beforeEach ->
+      mockExperienceResponse = {"experiences":[{"id":1},{"id":2}]}
+      queryDeferred.resolve(mockExperienceResponse)
+      $rootScope.$apply()
 
-  it 'should query the Experience service', ->
-    expect(mockExperience.index).toHaveBeenCalled();
+    it 'should query the Experience service', ->
+      expect(mockExperience.index).toHaveBeenCalled()
 
-  it 'should attach a list of experiences to the scope', ->
-    expect($scope.experiences).toEqual([{"id":1},{"id":2}])
+    it 'should attach a list of experiences to the scope', ->
+      expect($scope.experiences).toEqual([{"id":1},{"id":2}])
+
+  describe '#delete', ->
+    xit 'queries the Experience service', ->
+    xit 'removes experience from scope with authenticated request', ->
+    xit 'does not remove experience from scope with unauthenticated request', ->
