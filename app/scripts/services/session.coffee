@@ -13,7 +13,7 @@ angular.module('tuxedioFrontendApp')
       $http
       .post(API_URL + 'login.json', login)
       .success (data, status, headers, config) ->
-        AuthToken.setToken(data.token)
+        AuthToken.setToken(data.token, login.user.remember)
       .error (data, status, headers, config) ->
         # Remove token if user fails to log in
         AuthToken.setToken()

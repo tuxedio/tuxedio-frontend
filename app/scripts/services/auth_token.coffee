@@ -9,16 +9,21 @@
 ###
 angular.module('tuxedioFrontendApp')
   .factory 'AuthToken', ($window) ->
-    store = $window.localStorage
+    localStore = $window.localStorage
+    sessionStore = $window.sessionStorage
     key = 'auth-token'
 
     getToken =  ->
-      store.getItem(key)
+      localStore.getItem(key) || sessionStore.getItem(key)
 
-    setToken = (token) ->
+    setToken = (token, remember) ->
       if (token)
-        store.setItem(key, token)
+        if (remember)
+          localStore.setItem(key, token)
+        else
+          sessionStore.setItem(key, token)
       else
-        store.removeItem(key)
+        localStore.removeItem(key)
+        sessionStore.removeItem(key)
 
     { getToken: getToken, setToken: setToken }

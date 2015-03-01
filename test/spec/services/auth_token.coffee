@@ -7,6 +7,7 @@ describe 'Service: AuthToken', ->
 
   # instantiate service
   AuthToken = {}
+  remember = true
 
 
   beforeEach inject (_AuthToken_) ->
@@ -15,7 +16,7 @@ describe 'Service: AuthToken', ->
   it 'should should be able to set and remove a token', ->
     # Set token
     token = 'token-xxxx'
-    AuthToken.setToken(token)
+    AuthToken.setToken(token, remember)
     # Retrieve token
     storedToken = AuthToken.getToken()
     expect(storedToken).toEqual 'token-xxxx'
