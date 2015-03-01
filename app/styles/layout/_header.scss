@@ -1,0 +1,68 @@
+.header {
+  .navbar{
+    .navbar-brand{
+      font-weight: bold;
+      font-style: italic;
+      font-size: 40px;
+      background: #DADADA;
+    }
+    .tagline{
+      font-size: 20px;
+    }
+
+    .signup-button a {
+      padding-top: 23px;
+      padding-bottom: 0px;
+    }
+
+  }
+
+
+
+  // Collapsible Toggle menu system
+  .collapsable {
+    overflow: hidden;
+    height: 0;
+    transition: height 0.5s;
+    -webkit-transition: height 0.5s;
+    -moz-transition: height 0.5s;
+    -o-transition: height 0.5s;
+    width:100%;
+    text-align: center;
+
+    &.opendrop {
+      height: 350px;
+    }
+
+    a.close-button{
+      padding: 10px 15px;
+      float: right;
+      font-size:30px;
+      color:#333;
+      &:hover{
+        color:#555;
+      }
+
+    }
+    .form-group {
+      width: 80%;
+      margin: 15px auto;
+      text-align: left;
+    }
+    .vertical-divider{
+      width: 50%;
+      height: 200px;
+      border-right: 1px solid #333;
+    }
+
+    .sign-up-tuxedian, .sign-up-contributer{
+      img{
+        max-width:60%;
+        margin: 0 auto;
+      }
+      .btn{
+        margin-top: -20px;
+      }
+    }
+  }
+}
