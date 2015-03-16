@@ -1,0 +1,16 @@
+li.dropdown(ng-hide="!signedin")
+  a.dropdown-toggle(data-toggle='dropdown')
+    | My Account
+    span.glyphicon.glyphicon-user(style="margin-left:15px;")
+  ul.dropdown-menu(role='menu')
+    li
+      a(href="#profile") Profile
+    li.divider
+    li.dropdown-header(role="presentation") Trips Section
+    li
+      a(href="#bucket") My Bucket
+    li
+      a(href="#trips") Upcomming Trips
+    li.divider
+    li
+      a(ng-click="signout()") Sign Out

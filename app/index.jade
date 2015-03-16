@@ -7,10 +7,9 @@ html.no-js
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    include ./views/includes/navigation.jade
+    .header
+      include ./views/includes/navigation.jade
     .container
-      .header
-        h3.text-muted tuxedioFrontend
 
       div(ng-view="")
 
