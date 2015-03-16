@@ -37,6 +37,8 @@ module.exports = (config) ->
       'bower_components/angular-touch/angular-touch.js'
       'bower_components/angular-route/angular-route.js'
       'bower_components/ng-lodash/build/ng-lodash.js'
+      'bower_components/slick-carousel/slick/slick.min.js'
+      'bower_components/angular-slick/dist/slick.js'
       'bower_components/angular-mocks/angular-mocks.js'
       # endbower
       '.tmp/scripts/constants/config.js'

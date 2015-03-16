@@ -18,7 +18,8 @@ angular
     'ngSanitize',
     'ngTouch',
     'tuxedioFrontendApp.constants',
-    'ngLodash'
+    'ngLodash',
+    'slick'
   ])
 
   # Routes
