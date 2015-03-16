@@ -198,6 +198,24 @@ module.exports = function (grunt) {
       sass: {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         ignorePath: /(\.\.\/){1,2}bower_components\//
+      },
+      test: {
+        devDependencies: true,
+        src: 'test/karma.conf.coffee',
+        ignorePath:  /\.\.\//,
+        fileTypes: {
+          coffee: {
+            block: /(([\s\t]*)#\s*?bower:\s*?(\S*))(\n|\r|.)*?(#\s*endbower)/gi,
+            detect: {
+              js: /'(.*\.js)'/gi,
+              coffee: /'(.*\.coffee)'/gi
+            },
+            replace: {
+              js: '\'{{filePath}}\'',
+              coffee: '\'{{filePath}}\''
+            }
+          }
+        }
       }
     },
 
@@ -559,6 +577,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'wiredep:test',
     'concurrent:test',
     'autoprefixer',
     'configureProxies',
