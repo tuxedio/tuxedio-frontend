@@ -18,8 +18,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'tuxedioFrontendApp.constants',
-    'ngLodash',
-    'angular-owl-carousel'
+    'ngLodash'
   ])
 
   # Routes
