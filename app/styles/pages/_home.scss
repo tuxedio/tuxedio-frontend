@@ -1,0 +1,21 @@
+// Main Slider with buttons
+.main-slider-container{
+  width: 100%;
+  .slide{
+    text-align: center;
+    .slide-text{
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 40px 10px;
+      h3{
+        font-size:30px;
+        line-height: 35px;
+      }
+      p{
+        max-width: 400px;
+        margin: 0 auto;
+        line-height: 25px;
+      }
+    }
+  }
+}
