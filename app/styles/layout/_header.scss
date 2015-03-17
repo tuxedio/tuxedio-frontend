@@ -21,12 +21,9 @@
 
   // Collapsible Toggle menu system
   .collapsable {
+    @include transition(height 0.5s);
     overflow: hidden;
     height: 0;
-    transition: height 0.5s;
-    -webkit-transition: height 0.5s;
-    -moz-transition: height 0.5s;
-    -o-transition: height 0.5s;
     width:100%;
     text-align: center;
 
